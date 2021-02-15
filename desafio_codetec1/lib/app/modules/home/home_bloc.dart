@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class HomeBloc extends Disposable {
@@ -26,6 +27,8 @@ class HomeBloc extends Disposable {
     portalUser = value;
     input.add(portalUser);
   }
+
+  void clearName(TextEditingController controller) => controller.clear();
 
   //dispose will be called automatically by closing its streams
   @override

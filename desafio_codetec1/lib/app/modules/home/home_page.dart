@@ -5,6 +5,7 @@ import 'home_bloc.dart';
 
 class HomePage extends StatelessWidget {
   final homeBloc = Modular.get<HomeBloc>();
+  final TextEditingController nameController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -20,6 +21,8 @@ class HomePage extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.all(8),
                   child: CustomTextField(
+                    clearTap: () => homeBloc.clearName(nameController),
+                    controller: nameController,
                     borderColor: Theme.of(context).primaryColor,
                     keyboardType: TextInputType.text,
                     labelText: "Nome",
