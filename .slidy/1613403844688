@@ -1,0 +1,10 @@
+desafio_codetec1/lib/main.dart
+desafio_codetec1/lib/app/app_module.dart
+desafio_codetec1/lib/app/app_widget.dart
+desafio_codetec1/lib/app/modules/home/home_module.dart
+desafio_codetec1/lib/app/app_bloc.dart
+desafio_codetec1/lib/app/modules/home/home_page.dart
+desafio_codetec1/test/app/modules/home/home_page_test.dart
+desafio_codetec1/test/app/app_bloc_test.dart
+desafio_codetec1/lib/app/modules/home/home_bloc.dart
+desafio_codetec1/test/app/modules/home/home_bloc_test.dart
