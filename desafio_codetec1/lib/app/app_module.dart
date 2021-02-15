@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:desafio_codetec1/app/app_widget.dart';
 import 'package:desafio_codetec1/app/modules/home/home_module.dart';
 
-import 'app_bloc.dart';
-
 class AppModule extends MainModule {
   @override
   List<Bind> get binds => [

@@ -5,12 +5,18 @@ class AppWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       navigatorKey: Modular.navigatorKey,
-      title: 'Flutter Slidy',
+      title: 'Desafio CodeTec1',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        brightness: Brightness.light,
+        primaryColor: Colors.teal,
+        accentColor: Colors.teal[200],
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+        errorColor: Color.fromRGBO(255, 77, 106, 1),
       ),
-      initialRoute: '/',
+      themeMode: ThemeMode.light,
+      initialRoute: Modular.initialRoute,
       onGenerateRoute: Modular.generateRoute,
     );
   }
