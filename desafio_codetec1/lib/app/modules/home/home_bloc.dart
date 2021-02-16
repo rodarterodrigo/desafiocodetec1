@@ -37,6 +37,11 @@ class HomeBloc extends Disposable {
     input.add(homeModel);
   }
 
+  void inputReservist(String reservist){
+    this.homeModel.reservist = reservist;
+    input.add(homeModel);
+  }
+
   Future loading() async {
     this.changeLoading();
     Timer(Duration(seconds: 2), () async {
@@ -46,15 +51,17 @@ class HomeBloc extends Disposable {
   }
 
   void clearName(TextEditingController controller) { controller.clear(); this.homeModel.name = ""; this.input.add(this.homeModel); }
-  Future commit() async => await loading();
+  void clearReservist(TextEditingController controller) { controller.clear(); this.homeModel.reservist = ""; this.input.add(this.homeModel); }
 
-  @override
-  void dispose() {
-    _streamController.close();
-  }
+  Future commit() async => await loading();
 
   void changeLoading() {
     this.isLoading = !this.isLoading;
     this.input.add(isLoading);
+  }
+
+  @override
+  void dispose() {
+    _streamController.close();
   }
 }
