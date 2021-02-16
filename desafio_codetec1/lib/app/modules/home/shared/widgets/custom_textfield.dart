@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class CustomTextField extends StatelessWidget {
   CustomTextField({
+    this.suffixIcon,
     this.onChanged,
     this.labelText,
     this.hint,
@@ -26,6 +27,7 @@ class CustomTextField extends StatelessWidget {
   final bool isEnabled;
   final String errorText;
   final Icon prefixIcon;
+  final Icon suffixIcon;
   final TextInputType keyboardType;
   final TextEditingController controller;
   final String helperText;
@@ -52,7 +54,7 @@ class CustomTextField extends StatelessWidget {
               textInputAction: TextInputAction.done,
               decoration: InputDecoration(
                   floatingLabelBehavior: FloatingLabelBehavior.always,
-                  suffixIcon: GestureDetector(child: Icon(Icons.clear), onTap: clearTap,),
+                  suffixIcon: suffixIcon == null? null: GestureDetector(child: suffixIcon, onTap: clearTap,),
                   labelText: labelText,
                   helperText: helperText,
                   hintText: hint,

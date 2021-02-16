@@ -23,6 +23,8 @@ class HomePage extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.all(8),
                   child: CustomTextField(
+                    onChanged: (value) => homeBloc.inputName(value),
+                    suffixIcon: Icon(Icons.clear),
                     clearTap: () => homeBloc.clearName(nameController),
                     controller: nameController,
                     borderColor: Theme.of(context).primaryColor,
@@ -30,51 +32,57 @@ class HomePage extends StatelessWidget {
                     labelText: "Nome",
                   ),
                 ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Text("Sexo",
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Theme.of(context).primaryColor
-                      ),
-                    ),
-                    DropdownButton<String>(
-                      value: homeBloc.selectedGender,
-                      items: <String>['Masculino', 'Feminino',].map((String value) => DropdownMenuItem<String>(
-                        value: value,
-                        child: new Text(value,
-                          style: TextStyle(
-                            color: Theme.of(context).primaryColor,
-                            fontSize: 20
-                          ),
-                        ),
-                      )).toList(),
-                      onChanged: (value) => homeBloc.inputSex(value),
-                    ),
-                  ],
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Text("Usuário do portal?",
-                      style: TextStyle(
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("Sexo",
+                        style: TextStyle(
                           fontSize: 20,
                           color: Theme.of(context).primaryColor
+                        ),
                       ),
-                    ),
-                    Checkbox(value: homeBloc.portalUser,
-                        activeColor: Theme.of(context).primaryColor,
-                        onChanged:(value) => homeBloc.inputPortalUser(value)),
-                  ],
+                      DropdownButton<String>(
+                        value: homeBloc.selectedGender,
+                        items: <String>['Masculino', 'Feminino',].map((String value) => DropdownMenuItem<String>(
+                          value: value,
+                          child: new Text(value,
+                            style: TextStyle(
+                              color: Theme.of(context).primaryColor,
+                              fontSize: 20
+                            ),
+                          ),
+                        )).toList(),
+                        onChanged: (value) => homeBloc.inputSex(value),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("Usuário do portal?",
+                        style: TextStyle(
+                            fontSize: 20,
+                            color: Theme.of(context).primaryColor
+                        ),
+                      ),
+                      Checkbox(value: homeBloc.portalUser,
+                          activeColor: Theme.of(context).primaryColor,
+                          onChanged:(value) => homeBloc.inputPortalUser(value)),
+                    ],
+                  ),
                 ),
                 CustomButton(
                     onPressed: (){},
                     text: "Cadastrar",
                     buttonStyle: CustomButtonStyle.Primary,
-                    isEnable: true,
+                    isEnable: homeBloc.name != ""? true: false,
                 ),
               ],
             ),

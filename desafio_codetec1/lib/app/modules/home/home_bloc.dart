@@ -1,9 +1,12 @@
 import 'dart:async';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class HomeBloc extends Disposable {
+
+  String _name = "";
+  get name => _name;
+  set name(value) => _name = value;
 
   String _selectedGender = "Masculino";
   get selectedGender => _selectedGender;
@@ -17,6 +20,11 @@ class HomeBloc extends Disposable {
 
   Sink get input => _streamController.sink;
   Stream get output => _streamController.stream;
+
+  void inputName(String name){
+    this.name = name;
+    input.add(this.name);
+  }
 
   void inputSex(String sex){
     selectedGender = sex;
