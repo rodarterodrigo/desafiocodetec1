@@ -83,7 +83,8 @@ class CustomTextField extends StatelessWidget {
                       borderRadius: BorderRadius.all(Radius.circular(8))),
                   errorText: errorText,
                   enabled: isEnabled,
-                  prefixIcon: prefixIcon == null ? null : prefixIcon)),
+                  prefixIcon: prefixIcon == null ? null : prefixIcon)
+          ),
         ]
         )
     );
