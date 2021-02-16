@@ -17,7 +17,7 @@ class HomePage extends StatelessWidget {
         appBar: AppBar(
           title: Center(child: Text("Desafio Codetec1")),
         ),
-        body: SafeArea(
+        body: homeBloc.isLoading? Center(child: CircularProgressIndicator()): SafeArea(
           child: SingleChildScrollView(
             child: Column(
               children: [
@@ -80,7 +80,7 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
                 CustomButton(
-                    onPressed: () => Modular.to.popAndPushNamed(Routes.SUCCESSPAGE),
+                    onPressed: () async => await homeBloc.commit(),
                     text: "Cadastrar",
                     buttonStyle: CustomButtonStyle.Primary,
                     isEnable: homeBloc.homeModel.isValidForm(),

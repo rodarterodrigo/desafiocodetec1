@@ -1,16 +1,26 @@
 import 'dart:async';
 import 'package:desafio_codetec1/app/modules/models/home_model.dart';
+import 'package:desafio_codetec1/app/modules/routes/app_routes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class HomeBloc extends Disposable {
 
-  HomeModel homeModel = HomeModel();
+  final HomeModel homeModel = HomeModel();
+
+  bool _isLoading = false;
+  get isLoading => _isLoading;
+  set isLoading(value) => _isLoading = value;
 
   final StreamController _streamController = StreamController.broadcast();
 
   Sink get input => _streamController.sink;
   Stream get output => _streamController.stream;
+
+  void inputLoadin(bool value){
+    this.isLoading = value;
+    input.add(this.isLoading);
+  }
 
   void inputName(String name){
     this.homeModel.name = name;
@@ -27,10 +37,24 @@ class HomeBloc extends Disposable {
     input.add(homeModel);
   }
 
-  void clearName(TextEditingController controller) => controller.clear();
+  Future loading() async {
+    this.changeLoading();
+    Timer(Duration(seconds: 2), () async {
+      await Modular.to.pushNamed(Routes.SUCCESSPAGE);
+      this.changeLoading();
+    });
+  }
+
+  void clearName(TextEditingController controller) { controller.clear(); this.homeModel.name = ""; this.input.add(this.homeModel); }
+  Future commit() async => await loading();
 
   @override
   void dispose() {
     _streamController.close();
+  }
+
+  void changeLoading() {
+    this.isLoading = !this.isLoading;
+    this.input.add(isLoading);
   }
 }

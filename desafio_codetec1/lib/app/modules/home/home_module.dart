@@ -13,7 +13,7 @@ class HomeModule extends ChildModule {
   @override
   List<ModularRouter> get routers => [
         ModularRouter(Routes.HOME, child: (context, args) => HomePage()),
-        ModularRouter(Routes.SUCCESSPAGE, child: (context, args) => SuccessPage(), duration: Duration(seconds: 2)),
+        ModularRouter(Routes.SUCCESSPAGE, child: (context, args) => SuccessPage()),
       ];
 
   static Inject get to => Inject<HomeModule>.of();
