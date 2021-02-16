@@ -8,7 +8,7 @@ class CustomButton extends StatelessWidget {
       {@required this.onPressed,
         @required this.text,
         this.buttonStyle = CustomButtonStyle.Primary,
-        this.isEnable = true});
+        this.isEnable = false});
 
   final GestureTapCallback onPressed;
   final String text;

@@ -9,8 +9,6 @@ import 'home_bloc.dart';
 class HomePage extends StatelessWidget {
 
   final homeBloc = Modular.get<HomeBloc>();
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController reservistController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +24,20 @@ class HomePage extends StatelessWidget {
             child: SingleChildScrollView(
               child: Column(
                 children: [
+                  Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: AnimatedOpacity(
+                      opacity: homeBloc.homeModel.isValidForm()? 0: 1,
+                      duration: Duration(milliseconds: 800),
+                      child: Text(
+                        homeBloc.critical,
+                        style: TextStyle(
+                            color: Theme.of(context).errorColor,
+                            fontSize: 20
+                        ),
+                      ),
+                    ),
+                  ),
                   Card(
                     elevation: 10,
                     child: Container(
@@ -36,8 +48,8 @@ class HomePage extends StatelessWidget {
                             child: CustomTextField(
                               onChanged: (value) => homeBloc.inputName(value),
                               suffixIcon: Icon(Icons.clear),
-                              clearTap: () => homeBloc.clearName(nameController),
-                              controller: nameController,
+                              clearTap: () => homeBloc.clearName(homeBloc.nameController),
+                              controller: homeBloc.nameController,
                               borderColor: homeBloc.homeModel.isValidName()? Theme.of(context).accentColor: Theme.of(context).errorColor,
                               keyboardType: TextInputType.text,
                               labelText: "Nome",
@@ -97,8 +109,8 @@ class HomePage extends StatelessWidget {
                               child: CustomTextField(
                                 onChanged: (value) => homeBloc.inputReservist(value),
                                 suffixIcon: Icon(Icons.clear),
-                                clearTap: () => homeBloc.clearReservist(reservistController),
-                                controller: reservistController,
+                                clearTap: () => homeBloc.clearReservist(homeBloc.reservistController),
+                                controller: homeBloc.reservistController,
                                 borderColor: homeBloc.homeModel.isValidReservist()? Theme.of(context).accentColor: Theme.of(context).errorColor,
                                 keyboardType: TextInputType.text,
                                 labelText: "Nº Reservista",
@@ -106,18 +118,8 @@ class HomePage extends StatelessWidget {
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: AnimatedOpacity(
-                              opacity: homeBloc.homeModel.isValidForm()? 0: 1,
-                              duration: Duration(milliseconds: 800),
-                              child: Text(
-                                homeBloc.critical,
-                                style: TextStyle(
-                                  color: Theme.of(context).errorColor,
-                                  fontSize: 20
-                                ),
-                              ),
-                            ),
+                            padding: const EdgeInsets.all(8.0),
+                            child: CustomButton(onPressed: () => homeBloc.openFile(context), text: "Carregar PDF", isEnable: true,),
                           ),
                         ],
                       ),
