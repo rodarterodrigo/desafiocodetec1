@@ -1,6 +1,7 @@
-import 'package:desafio_codetec1/app/modules/home/shared/enums/buttom_style.dart';
-import 'package:desafio_codetec1/app/modules/home/shared/widgets/custom_buttom.dart';
-import 'package:desafio_codetec1/app/modules/home/shared/widgets/custom_textfield.dart';
+import 'package:desafio_codetec1/app/modules/routes/app_routes.dart';
+import 'package:desafio_codetec1/app/modules/shared/enums/buttom_style.dart';
+import 'package:desafio_codetec1/app/modules/shared/widgets/custom_buttom.dart';
+import 'package:desafio_codetec1/app/modules/shared/widgets/custom_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'home_bloc.dart';
@@ -45,7 +46,7 @@ class HomePage extends StatelessWidget {
                         ),
                       ),
                       DropdownButton<String>(
-                        value: homeBloc.selectedGender,
+                        value: homeBloc.homeModel.gender,
                         items: <String>['Masculino', 'Feminino',].map((String value) => DropdownMenuItem<String>(
                           value: value,
                           child: new Text(value,
@@ -72,17 +73,17 @@ class HomePage extends StatelessWidget {
                             color: Theme.of(context).primaryColor
                         ),
                       ),
-                      Checkbox(value: homeBloc.portalUser,
+                      Checkbox(value: homeBloc.homeModel.isPortalUser,
                           activeColor: Theme.of(context).primaryColor,
                           onChanged:(value) => homeBloc.inputPortalUser(value)),
                     ],
                   ),
                 ),
                 CustomButton(
-                    onPressed: (){},
+                    onPressed: () => Modular.to.popAndPushNamed(Routes.SUCCESSPAGE),
                     text: "Cadastrar",
                     buttonStyle: CustomButtonStyle.Primary,
-                    isEnable: homeBloc.name != ""? true: false,
+                    isEnable: homeBloc.homeModel.isValidForm(),
                 ),
               ],
             ),

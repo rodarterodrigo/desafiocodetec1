@@ -1,20 +1,11 @@
 import 'dart:async';
+import 'package:desafio_codetec1/app/modules/models/home_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class HomeBloc extends Disposable {
 
-  String _name = "";
-  get name => _name;
-  set name(value) => _name = value;
-
-  String _selectedGender = "Masculino";
-  get selectedGender => _selectedGender;
-  set selectedGender(value) => _selectedGender = value;
-
-  bool _portalUser = false;
-  get portalUser => _portalUser;
-  set portalUser(value) => _portalUser = value;
+  HomeModel homeModel = HomeModel();
 
   final StreamController _streamController = StreamController.broadcast();
 
@@ -22,23 +13,22 @@ class HomeBloc extends Disposable {
   Stream get output => _streamController.stream;
 
   void inputName(String name){
-    this.name = name;
-    input.add(this.name);
+    this.homeModel.name = name;
+    input.add(this.homeModel);
   }
 
   void inputSex(String sex){
-    selectedGender = sex;
-    input.add(selectedGender);
+    this.homeModel.gender = sex;
+    input.add(homeModel);
   }
 
   void inputPortalUser(bool value){
-    portalUser = value;
-    input.add(portalUser);
+    this.homeModel.isPortalUser = value;
+    input.add(homeModel);
   }
 
   void clearName(TextEditingController controller) => controller.clear();
 
-  //dispose will be called automatically by closing its streams
   @override
   void dispose() {
     _streamController.close();

@@ -1,4 +1,4 @@
-import 'package:desafio_codetec1/app/modules/home/shared/enums/buttom_style.dart';
+import 'package:desafio_codetec1/app/modules/shared/enums/buttom_style.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -20,7 +20,7 @@ class CustomButton extends StatelessWidget {
     switch (buttonStyle) {
       case CustomButtonStyle.Primary:
         return MaterialButton(
-          disabledColor: Colors.teal[200],
+          disabledColor: Theme.of(context).accentColor,
             shape: RoundedRectangleBorder(
                 borderRadius: new BorderRadius.circular(2.5)),
             padding: EdgeInsets.only(right: 16, left: 16, top: 10, bottom: 10),
@@ -39,7 +39,7 @@ class CustomButton extends StatelessWidget {
             color: Colors.white,
             textColor: Colors.white,
             child: new Text(text, style: getButtonFontStyle(buttonStyle, context)),
-            onPressed: isEnable? onPressed: (){});
+            onPressed: isEnable? onPressed: null);
         break;
     }
   }

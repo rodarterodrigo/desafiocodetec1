@@ -1,8 +1,8 @@
+import 'package:desafio_codetec1/app/modules/home/home_page.dart';
+import 'package:desafio_codetec1/app/modules/routes/app_routes.dart';
+import 'package:desafio_codetec1/app/modules/success_page/success_page.dart';
 import 'home_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-
-import 'home_bloc.dart';
-import 'home_page.dart';
 
 class HomeModule extends ChildModule {
   @override
@@ -12,7 +12,8 @@ class HomeModule extends ChildModule {
 
   @override
   List<ModularRouter> get routers => [
-        ModularRouter(Modular.initialRoute, child: (_, args) => HomePage()),
+        ModularRouter(Routes.HOME, child: (context, args) => HomePage()),
+        ModularRouter(Routes.SUCCESSPAGE, child: (context, args) => SuccessPage(), duration: Duration(seconds: 2)),
       ];
 
   static Inject get to => Inject<HomeModule>.of();
