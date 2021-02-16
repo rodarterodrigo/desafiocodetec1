@@ -14,6 +14,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    homeBloc.criticalMessage();
     return StreamBuilder(
       stream: homeBloc.output,
       builder: (context, snapshot) => Scaffold(
@@ -25,87 +26,111 @@ class HomePage extends StatelessWidget {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  Padding(
-                    padding: EdgeInsets.all(8),
-                    child: CustomTextField(
-                      onChanged: (value) => homeBloc.inputName(value),
-                      suffixIcon: Icon(Icons.clear),
-                      clearTap: () => homeBloc.clearName(nameController),
-                      controller: nameController,
-                      borderColor: Theme.of(context).primaryColor,
-                      keyboardType: TextInputType.text,
-                      labelText: "Nome",
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("Sexo",
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Theme.of(context).primaryColor
+                  Card(
+                    elevation: 10,
+                    child: Container(
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.all(8),
+                            child: CustomTextField(
+                              onChanged: (value) => homeBloc.inputName(value),
+                              suffixIcon: Icon(Icons.clear),
+                              clearTap: () => homeBloc.clearName(nameController),
+                              controller: nameController,
+                              borderColor: homeBloc.homeModel.isValidName()? Theme.of(context).accentColor: Theme.of(context).errorColor,
+                              keyboardType: TextInputType.text,
+                              labelText: "Nome",
+                            ),
                           ),
-                        ),
-                        DropdownButton<String>(
-                          value: homeBloc.homeModel.gender,
-                          items: <String>['Masculino', 'Feminino',].map((String value) => DropdownMenuItem<String>(
-                            value: value,
-                            child: new Text(value,
-                              style: TextStyle(
-                                color: Theme.of(context).primaryColor,
-                                fontSize: 20
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text("Sexo",
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    color: Theme.of(context).primaryColor
+                                  ),
+                                ),
+                                DropdownButton<String>(
+                                  value: homeBloc.homeModel.gender,
+                                  items: <String>['M', 'F',].map((String value) => DropdownMenuItem<String>(
+                                    value: value,
+                                    child: new Text(value,
+                                      style: TextStyle(
+                                        color: Theme.of(context).primaryColor,
+                                        fontSize: 20
+                                      ),
+                                    ),
+                                  )).toList(),
+                                  onChanged: (value) => homeBloc.inputSex(value),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text("Usuário do portal?",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      color: Theme.of(context).primaryColor
+                                  ),
+                                ),
+                                Checkbox(value: homeBloc.homeModel.isPortalUser,
+                                    activeColor: Theme.of(context).primaryColor,
+                                    onChanged:(value) => homeBloc.inputPortalUser(value)),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.all(8),
+                            child: AnimatedOpacity(
+                              opacity: homeBloc.homeModel.gender == "F"? 0: 1,
+                              duration: Duration(milliseconds: 800),
+                              child: CustomTextField(
+                                onChanged: (value) => homeBloc.inputReservist(value),
+                                suffixIcon: Icon(Icons.clear),
+                                clearTap: () => homeBloc.clearReservist(reservistController),
+                                controller: reservistController,
+                                borderColor: homeBloc.homeModel.isValidReservist()? Theme.of(context).accentColor: Theme.of(context).errorColor,
+                                keyboardType: TextInputType.text,
+                                labelText: "Nº Reservista",
                               ),
                             ),
-                          )).toList(),
-                          onChanged: (value) => homeBloc.inputSex(value),
-                        ),
-                      ],
+                          ),
+                          Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: AnimatedOpacity(
+                              opacity: homeBloc.homeModel.isValidForm()? 0: 1,
+                              duration: Duration(milliseconds: 800),
+                              child: Text(
+                                homeBloc.critical,
+                                style: TextStyle(
+                                  color: Theme.of(context).errorColor,
+                                  fontSize: 20
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("Usuário do portal?",
-                          style: TextStyle(
-                              fontSize: 20,
-                              color: Theme.of(context).primaryColor
-                          ),
-                        ),
-                        Checkbox(value: homeBloc.homeModel.isPortalUser,
-                            activeColor: Theme.of(context).primaryColor,
-                            onChanged:(value) => homeBloc.inputPortalUser(value)),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(8),
-                    child: CustomTextField(
-                      onChanged: (value) => (value) => homeBloc.inputReservist(value),
-                      suffixIcon: Icon(Icons.clear),
-                      clearTap: () => homeBloc.clearReservist(reservistController),
-                      controller: reservistController,
-                      borderColor: Theme.of(context).primaryColor,
-                      keyboardType: TextInputType.text,
-                      labelText: "Nº Reservista",
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text(
-                      "Critical Text"
-                    ),
-                  ),
-                  CustomButton(
+                    child: CustomButton(
                       onPressed: () async => await homeBloc.commit(),
                       text: "Cadastrar",
                       buttonStyle: CustomButtonStyle.Primary,
                       isEnable: homeBloc.homeModel.isValidForm(),
+                    ),
                   ),
                 ],
               ),

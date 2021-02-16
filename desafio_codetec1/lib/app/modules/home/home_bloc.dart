@@ -8,6 +8,10 @@ class HomeBloc extends Disposable {
 
   final HomeModel homeModel = HomeModel();
 
+  String _critical = "";
+  get critical => _critical;
+  set critical(value) => _critical = value;
+
   bool _isLoading = false;
   get isLoading => _isLoading;
   set isLoading(value) => _isLoading = value;
@@ -17,18 +21,20 @@ class HomeBloc extends Disposable {
   Sink get input => _streamController.sink;
   Stream get output => _streamController.stream;
 
-  void inputLoadin(bool value){
+  void inputLoading(bool value){
     this.isLoading = value;
     input.add(this.isLoading);
   }
 
   void inputName(String name){
     this.homeModel.name = name;
+    this.criticalMessage();
     input.add(this.homeModel);
   }
 
   void inputSex(String sex){
     this.homeModel.gender = sex;
+    this.criticalMessage();
     input.add(homeModel);
   }
 
@@ -39,6 +45,7 @@ class HomeBloc extends Disposable {
 
   void inputReservist(String reservist){
     this.homeModel.reservist = reservist;
+    this.criticalMessage();
     input.add(homeModel);
   }
 
@@ -50,8 +57,8 @@ class HomeBloc extends Disposable {
     });
   }
 
-  void clearName(TextEditingController controller) { controller.clear(); this.homeModel.name = ""; this.input.add(this.homeModel); }
-  void clearReservist(TextEditingController controller) { controller.clear(); this.homeModel.reservist = ""; this.input.add(this.homeModel); }
+  void clearName(TextEditingController controller) { controller.clear(); this.homeModel.name = ""; this.criticalMessage(); this.input.add(this.homeModel); }
+  void clearReservist(TextEditingController controller) { controller.clear(); this.homeModel.reservist = ""; this.criticalMessage(); this.input.add(this.homeModel); }
 
   Future commit() async => await loading();
 
@@ -63,5 +70,20 @@ class HomeBloc extends Disposable {
   @override
   void dispose() {
     _streamController.close();
+  }
+
+  void criticalMessage(){
+    if (!homeModel.isValidName()) {
+      this.critical = "Preencha seu nome";
+      this.input.add(this.critical);
+      return;
+    }
+
+    if (!homeModel.isValidReservist() && homeModel.gender == "M") {
+      this.critical = "Preencha o seu número de reservista";
+      this.input.add(this.critical);
+      return;
+    }
+    this.critical = "";
   }
 }

@@ -4,7 +4,7 @@ class HomeModel{
   bool isPortalUser;
   String reservist;
 
-  HomeModel({this.name = "", this.gender = "Masculino", this.isPortalUser = false, this.reservist = ""});
+  HomeModel({this.name = "", this.gender = "M", this.isPortalUser = false, this.reservist = ""});
 
   @override
   String toString(){
@@ -13,5 +13,5 @@ class HomeModel{
 
   bool isValidName() => this.name.isNotEmpty;
   bool isValidReservist() => this.reservist.isNotEmpty;
-  bool isValidForm() => this.isValidName() && ((this.isValidReservist() && this.gender == "Masculino") || (!this.isValidReservist() && this.gender == "Feminino"));
+  bool isValidForm() => this.isValidName() && ((this.isValidReservist() && this.gender == "M") || (!this.isValidReservist() && this.gender == "F"));
 }
